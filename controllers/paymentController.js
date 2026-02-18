@@ -1,18 +1,11 @@
-const paystack = require("../config/paystack")
+const axios = require("axios")
 
-exports.initializePayment = async (req, res) => {
-  try {
-    const { email, amount } = req.body
-
-    const response = await paystack.post("/transaction/initialize", {
-      email,
-      amount: amount * 100
-    })
-
-    res.json(response.data)
-  } catch (error) {
-    res.status(500).json({
-      error: error.message
-    })
+const paystack = axios.create({
+  baseURL: "https://api.paystack.co",
+  headers: {
+    Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+    "Content-Type": "application/json"
   }
-}
+})
+
+module.exports = paystack
