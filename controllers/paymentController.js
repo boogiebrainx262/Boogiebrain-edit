@@ -1,8 +1,19 @@
-const express = require("express")
-const router = express.Router()
+const paystack = require("../config/paystack")
 
-const { initializePayment } = require("../controllers/paymentController")
+exports.initializePayment = async (req, res) => {
+  try {
+    const { email, amount } = req.body
 
-router.post("/initialize", initializePayment)
+    const response = await paystack.post("/transaction/initialize", {
+      email,
+      amount: amount * 100
+    })
 
-module.exports = router
+    res.json(response.data)
+
+  } catch (error) {
+    res.status(500).json({
+      error: error.message
+    })
+  }
+}
