@@ -1,11 +1,8 @@
-const axios = require("axios")
+const express = require("express")
+const router = express.Router()
 
-const paystack = axios.create({
-  baseURL: "https://api.paystack.co",
-  headers: {
-    Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
-    "Content-Type": "application/json"
-  }
-})
+const { initializePayment } = require("../controllers/paymentController")
 
-module.exports = paystack
+router.post("/initialize", initializePayment)
+
+module.exports = router
