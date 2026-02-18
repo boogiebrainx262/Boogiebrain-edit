@@ -8,7 +8,43 @@
 
 <h1>Boogiebrain Marketplace</h1>
 
-<p>Website is working ✅</p>
+<h3>MTN Premium Logs</h3>
+<p>Price: ₦5000</p>
+
+<button onclick="buyProduct('MTN Logs', 5000)">
+Buy Now
+</button>
+
+<script>
+async function buyProduct(productName, price) {
+  try {
+    const res = await fetch(
+      "https://boogiebrain-backend.onrender.com/api/payment/initialize",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: "test@email.com",
+          amount: price * 100,
+          productName: productName
+        }),
+      }
+    );
+
+    const data = await res.json();
+
+    if (data.authorization_url) {
+      window.location.href = data.authorization_url;
+    } else {
+      alert("Payment failed");
+    }
+  } catch (err) {
+    alert("Server error");
+  }
+}
+</script>
 
 </body>
 </html>
