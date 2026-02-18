@@ -1,30 +1,14 @@
-<script>
-async function buyProduct(productName, price) {
-  try {
-    const res = await fetch(
-      "https://boogiebrain-backend.onrender.com/api/payment/initialize",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: "test@email.com",
-          amount: price * 100,
-          productName: productName
-        }),
-      }
-    );
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Boogiebrain Marketplace</title>
+</head>
 
-    const data = await res.json();
+<body style="background:black; color:white; text-align:center; font-family:Arial">
 
-    if (data.authorization_url) {
-      window.location.href = data.authorization_url;
-    } else {
-      alert("Payment failed");
-    }
-  } catch (err) {
-    alert("Server error");
-  }
-}
-</script>
+<h1>Boogiebrain Marketplace</h1>
+
+<p>Website is working ✅</p>
+
+</body>
+</html>
