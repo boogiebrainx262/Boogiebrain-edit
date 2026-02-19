@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Boogiebrain</title>
+  <title>Payment Page</title>
 </head>
 <body>
 
-<h2>Boogiebrain Store</h2>
+  <h2>Pay Now</h2>
 
-<input id="email" type="email" placeholder="Enter your email" />
-<br><br>
+  <input type="email" id="email" placeholder="Enter email" required />
+  <input type="number" id="amount" placeholder="Enter amount" required />
 
-<input id="amount" type="number" placeholder="Enter amount" />
-<br><br>
+  <button onclick="payNow()">Pay Now</button>
 
-<button onclick="payNow()">Pay Now</button>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>
