@@ -1,33 +1,27 @@
-import axios from "axios";
+const paystack = require("../config/paystack")
 
-export const initializePayment = async (req, res) => {
-  const { email, amount } = req.body;
-
+exports.initializePayment = async (req, res) => {
   try {
-    const response = await axios.post(
-      "https://api.paystack.co/transaction/initialize",
-      {
-        email: email,
-        amount: amount * 100
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
-          "Content-Type": "application/json"
-        }
-      }
-    );
+    const { email, amount } = req.body
 
-    console.log(response.data);
+    if (!email || !amount) {
+      return res.status(400).json({
+        error: "Email and amount are required"
+      })
+    }
 
-    res.json(response.data);
+    const response = await paystack.post("/transaction/initialize", {
+      email,
+      amount: amount * 100
+    })
+
+    res.json(response.data)
 
   } catch (error) {
-    console.log(error.response?.data || error.message);
+    console.log("FULL ERROR:", error.response?.data || error.message)
 
     res.status(500).json({
-      status: false,
-      message: "Payment initialization failed"
-    });
+      error: error.response?.data || error.message
+    })
   }
-};
+}
