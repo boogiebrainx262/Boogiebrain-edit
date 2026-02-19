@@ -1,6 +1,6 @@
 async function payNow() {
-  const email = document.getElementById("email").value
-  const amount = document.getElementById("amount").value
+  const email = document.getElementById("email").value;
+  const amount = document.getElementById("amount").value;
 
   try {
     const response = await fetch(
@@ -11,19 +11,24 @@ async function payNow() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          email: email,
-          amount: amount
+          email,
+          amount
         })
       }
-    )
+    );
 
-    const data = await response.json()
+    const data = await response.json();
 
-    if (data.data.authorization_url) {
-      window.location.href = data.data.authorization_url
+    console.log(data); // VERY IMPORTANT (for debugging)
+
+    if (data.status && data.data.authorization_url) {
+      window.location.href = data.data.authorization_url;
+    } else {
+      alert("Payment failed: " + data.message);
     }
 
   } catch (error) {
-    alert("Payment failed")
+    console.error(error);
+    alert("Payment failed");
   }
 }
