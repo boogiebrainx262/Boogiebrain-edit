@@ -1,23 +1,25 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import paymentRoutes from "./routes/paymentRoutes.js";
+const express = require("express")
+const cors = require("cors")
+require("dotenv").config()
 
-dotenv.config();
+const app = express()
 
-const app = express();
+// Middlewares
+app.use(cors())
+app.use(express.json())
 
-app.use(cors());
-app.use(express.json());
+// Routes
+const paymentRoutes = require("./routes/paymentRoutes")
+app.use("/api/payments", paymentRoutes)
 
-app.use("/api/payments", paymentRoutes);
-
+// Root route (optional but recommended)
 app.get("/", (req, res) => {
-  res.send("Server running");
-});
+  res.send("Backend is running 🚀")
+})
 
-const PORT = process.env.PORT || 5000;
+// VERY IMPORTANT FOR RENDER
+const PORT = process.env.PORT || 5000
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+  console.log(`Server running on port ${PORT}`)
+})
